@@ -28,6 +28,10 @@ public class ControladorEmpresa {
         boolean resultado = EmpresaDao.inserir(objeto);
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
+            if (man.listagem != null) {
+     atualizarTabela(man.listagem.table); //atualizar a tabela da listagem
+}
+man.dispose();//fechar a tela da manutenção
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
@@ -58,6 +62,7 @@ public class ControladorEmpresa {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+        
     }
     
     public static void atualizarTabela(JTable tabela) {
@@ -77,5 +82,16 @@ public class ControladorEmpresa {
             modelo.addRow(linha); //adicionando a linha na tabela
         }
         tabela.setModel(modelo);
+    }
+    
+    public static void atualizaCampos(ManutencaoEmpresa man, int pk){ 
+        Empresa objeto = EmpresaDao.consultar(pk);
+        //Definindo os valores do campo na tela (um para cada atributo/campo)
+        man.jtfCodigo.setText(objeto.getCodigo().toString());
+        man.jtfNomeFantasia.setText(objeto.getNome_fantasia());
+        man.jtfRazaoSocial.setText(objeto.getRazao_social());
+        
+        man.jtfCodigo.setEnabled(false); //desabilitando o campo código
+        man.btnAdicionar.setEnabled(false); //desabilitando o botão adicionar
     }
 }

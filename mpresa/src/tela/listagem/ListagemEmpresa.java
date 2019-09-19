@@ -5,6 +5,7 @@
  */
 package tela.listagem;
 import controlador.ControladorEmpresa;
+import tela.manutencao.ManutencaoEmpresa;
 
 /**
  *
@@ -34,6 +35,7 @@ public class ListagemEmpresa extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        btnNovo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,7 +53,19 @@ public class ListagemEmpresa extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
+
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,7 +75,9 @@ public class ListagemEmpresa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addGap(66, 66, 66)
+                        .addComponent(btnNovo))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -71,7 +87,9 @@ public class ListagemEmpresa extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnNovo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -79,6 +97,23 @@ public class ListagemEmpresa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+ManutencaoEmpresa manutencao = new ManutencaoEmpresa(null, true, this);
+manutencao.setVisible(true);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void tableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMousePressed
+        if (evt.getClickCount() == 2) {
+            //obtem a linha selecionada
+            int linhaSelecionada = table.getSelectedRow();
+            //obtém a chave primária
+            int pk = Integer.parseInt(table.getValueAt(linhaSelecionada, 0).toString()); //pk está na coluna 0
+            //abre a manutenção
+            ManutencaoEmpresa manutencao = new ManutencaoEmpresa(null, true, this, pk);
+            manutencao.setVisible(true);
+        }
+    }//GEN-LAST:event_tableMousePressed
 
     /**
      * @param args the command line arguments
@@ -123,8 +158,9 @@ public class ListagemEmpresa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnNovo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    public javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
